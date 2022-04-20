@@ -1,0 +1,38 @@
+.home_navbar {
+  display: flex;
+  flex: 1;
+  height: 3rem;
+
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  justify-content: flex-start;
+  border-bottom: 1px solid black;
+}
+
+.api_count {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30px;
+  padding: 5px;
+  border-right: 1px solid black;
+  padding-right: 30px;
+}
+
+.home_api_button {
+  align-self: center;
+  font-weight: bold;
+  border-radius: 6px;
+  outline: none;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  cursor: pointer;
+  margin-left: 20px;
+  color: rgb(74, 74, 207);
+  width: 80px;
+  height: 50px;
+}
+.home_api_button:hover {
+}
+.home_api_button:active {
+  background-color: rgb(158, 147, 147);
+}
