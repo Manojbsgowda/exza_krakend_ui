@@ -14,7 +14,7 @@ const formSubmitSlice = createSlice({
       state.serviceData = action.payload;
     },
     endpointsFormData: (state, action) => {
-      state.endpointsData = action.payload;
+      state.endpointsData.push(action.payload);
     },
     setIsDownload: (state, action) => {
       state.isDownload = action.payload;

@@ -103,19 +103,21 @@ const FormDialog = (props) => {
       method: formInpuValues.http_method,
       extra_config: {
         qos_ratelimit_router: {
-          max_rate: getDialogInputValues.rate_limit,
-          client_max_rate: getDialogInputValues.user_quota,
+          max_rate: parseInt(getDialogInputValues.rate_limit),
+          client_max_rate: parseInt(getDialogInputValues.user_quota),
         },
       },
-      input_query_strings: [formInpuValues.parameters],
+      input_query_strings: [...formInpuValues.parameters],
       input_headers: [formInpuValues.headers_passing_to_backend],
-      concurrent_calls: formInpuValues.concurrent_calls,
+      concurrent_calls: parseInt(formInpuValues.concurrent_calls),
       backend: [
         {
           extra_config: {
             qos_ratelimit_proxy: {
-              max_rate: getEndpointRatelimitDialog.endpoint_rate_limit,
-              capacity: getEndpointRatelimitDialog.Capacity_burstsize,
+              max_rate: parseInt(
+                getEndpointRatelimitDialog.endpoint_rate_limit
+              ),
+              capacity: parseInt(getEndpointRatelimitDialog.Capacity_burstsize),
             },
           },
           url_pattern: formInpuValues.url_pattern,
@@ -227,6 +229,8 @@ const FormDialog = (props) => {
                 <ChipTextField
                   id="parameters"
                   name="parameters"
+                  label="Parameters"
+                  placeholder="Parameters"
                   setHostNames={callbackParameters}
                 />
                 <span className="service_textbox_hints">

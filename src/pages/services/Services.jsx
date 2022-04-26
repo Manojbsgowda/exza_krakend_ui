@@ -29,19 +29,18 @@ const Services = () => {
   const handleServiceInput = (e) => {
     setServiceInput({ ...serviceInput, [e.target.name]: e.target.value });
   };
-  console.log(serviceInput);
+
   const callbackEnpoints = useCallback((value) => {
-    console.log(value);
     setServiceInput({ ...serviceInput, host_name: value });
   });
   const handleServiceForm = (e) => {
     const postServicesData = {
-      version: serviceInput.version,
-      port: serviceInput.port,
+      version: parseInt(serviceInput.version),
+      port: parseInt(serviceInput.port),
       serviceName: serviceInput.service_name,
       hostName: serviceInput.host_name,
     };
-    console.log(JSON.stringify(postServicesData, null, 2));
+
     dispatch(serviceFormData(postServicesData));
     navigate("/endpoint");
   };
@@ -63,6 +62,7 @@ const Services = () => {
                 variant="outlined"
                 fullWidth
                 required
+                value={serviceInput.version}
                 onChange={handleServiceInput}
               />
               <span className="service_textbox_hints">
@@ -76,6 +76,7 @@ const Services = () => {
                 label="Port "
                 variant="outlined"
                 fullWidth
+                value={serviceInput.port}
                 onChange={handleServiceInput}
               />
               <span className="service_textbox_hints">
@@ -89,6 +90,7 @@ const Services = () => {
                 label="Service Name"
                 variant="outlined"
                 fullWidth
+                value={serviceInput.service_name}
                 onChange={handleServiceInput}
               />
               <span className="service_textbox_hints">
@@ -100,6 +102,9 @@ const Services = () => {
               <ChipTextField
                 id="host_name"
                 name="host_name"
+                label="Host names"
+                placeholder="Host names"
+                value={serviceInput.host_name}
                 setHostNames={callbackEnpoints}
               />
               <span className="service_textbox_hints">

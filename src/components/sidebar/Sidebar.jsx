@@ -22,6 +22,7 @@ import {
   getServiceFormData,
 } from "../../redux/formSubmit/formSubmitSlice";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -42,41 +43,44 @@ const Sidebar = () => {
     navigate("/endpoint");
   };
 
-  const sendData = () => {
+  const sendData = async () => {
     const { hostName, ...info1 } = serviceData;
-    const { id, title1, ...info2 } = endpointsData;
-    console.log(
-      JSON.stringify({ ...info1, endpoints: endpointsData }, null, 2)
-    );
-    axios
-      .post(
-        "http://localhost:5000/config/create",
-        JSON.stringify({ ...info1, endpoints: info2 }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        const url = "http://localhost:5000/config/download";
+    let newArr = [];
+    await endpointsData[0]?.map((value) => {
+      const { id, title1, ...info } = value;
+      newArr.push(info);
+    });
 
-        axios.get(url).then(() => {
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", `krakend.json`);
-          document.body.appendChild(link);
-          link.click();
-        });
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    console.log(newArr);
+    setTimeout(() => {
+      console.log(JSON.stringify({ ...info1, endpoints: newArr }, null, 2));
+      axios
+        .post(
+          "http://localhost:5000/config/create",
+          JSON.stringify({ ...info1, endpoints: newArr }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          const url = "http://localhost:5000/config/download";
+
+          axios.get(url).then(() => {
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `krakend.json ${uuidv4()}`);
+            document.body.appendChild(link);
+            link.click();
+          });
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }, 2000);
   };
 
   const downloadConfigData = async () => {
-    console.log(
-      JSON.stringify({ ...serviceData, endpoints: endpointsData }, null, 2)
-    );
     await sendData();
   };
 

@@ -31,8 +31,8 @@ const ChipTextField = (props) => {
           <TextField
             {...params}
             variant="outlined"
-            label="Host Name"
-            placeholder="Host Names"
+            label={props.label}
+            placeholder={props.placeholder}
           />
         )}
       />
